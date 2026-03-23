@@ -1,0 +1,61 @@
+{
+  "schema": {
+    "required": ["id", "content", "categories", "type", "style"],
+    "optional": ["difficulty", "is_online_compatible", "requires_movement", "tone", "status"],
+    "fields": {
+      "id": "string, 格式: Q001, Q002...",
+      "content": "string, 題目文字",
+      "categories": "string[], 適用場景，可多選: coworker|new_team|friends|online|event",
+      "type": "string, 題型: question|quickfire|challenge",
+      "style": "string, 風格: general|fun",
+      "difficulty": "string, easy|medium|hard",
+      "is_online_compatible": "boolean",
+      "requires_movement": "boolean",
+      "tone": "string, safe|lively|playful",
+      "status": "string, active|inactive, 預設 active"
+    }
+  },
+  "generation_targets": {
+    "question": { "count": "35~40", "general": "60%", "fun": "40%" },
+    "quickfire": { "count": "25~30", "general": "30%", "fun": "70%" },
+    "challenge": { "count": "20~30", "general": "40%", "fun": "60%" }
+  },
+  "scene_style_ratio": {
+    "friends": { "fun": 0.8, "general": 0.2 },
+    "event": { "fun": 0.6, "general": 0.4 },
+    "online": { "fun": 0.5, "general": 0.5 },
+    "new_team": { "fun": 0.4, "general": 0.6 },
+    "coworker": { "fun": 0.2, "general": 0.8 }
+  },
+  "style_guidelines": {
+    "fun": {
+      "principles": ["短：一句話說完", "一聽就懂", "不私密", "不費腦", "可接話", "輕微荒謬但安全"],
+      "examples": ["咖啡還是奶茶？", "如果你是一種天氣，你覺得你是什麼天氣？"]
+    },
+    "general": {
+      "principles": ["偏向自我介紹、認識彼此、分享經驗", "開放式回答、壓力低", "適合職場或正式場合"],
+      "examples": ["你最近最想推薦大家的一件小事是什麼？", "如果今天不用上班，你最想做什麼？"]
+    }
+  },
+  "type_guidelines": {
+    "question": {
+      "description": "開放式問答，壓力低，回答時間寬鬆",
+      "principles": ["安全、易懂、容易回答", "適合多數場景"]
+    },
+    "quickfire": {
+      "description": "簡短直覺，二選一或單句回答",
+      "principles": ["一聽就能馬上回答", "不需要思考超過 3 秒", "多為二選一或直覺題"]
+    },
+    "challenge": {
+      "description": "行動任務，短、好執行",
+      "principles": ["任務短、容易執行", "避免高風險或肢體負擔", "需標記 is_online_compatible 和 requires_movement", "線上與線下可明確區分"]
+    }
+  },
+  "categories_assignment_rules": [
+    "一題可適用多個場景，根據題目內容智慧判斷",
+    "quickfire 趣味題通常可適用所有場景",
+    "challenge 需移動的題目不應標記 online",
+    "tone=safe 的題目應包含 coworker",
+    "tone=playful 的題目不建議標記 coworker"
+  ]
+}
